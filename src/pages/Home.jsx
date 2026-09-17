@@ -12,15 +12,15 @@ export default function Home() {
   const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState('')
 
+  
   const filtered = useMemo(() => {
-    let list = products.filter(p => {
-      const matchSearch = p.name.toLowerCase().includes(search.toLowerCase())
-      const matchCat = category ? p.category === category : true
-      const matchPrice = maxPrice ? p.price <= Number(maxPrice) : true
-      return matchSearch && matchCat && matchPrice
-    })
-    if (sort === 'asc') list = [...list].sort((a, b) => a.price - b.price)
-    if (sort === 'desc') list = [...list].sort((a, b) => b.price - a.price)
+    let list = products
+    // 1. search   -> mbaj vetem motorrat ku p.name permban tekstin (toLowerCase + includes)
+    // 2. category -> nese category ka vlere: mbaj vetem p.category === category
+    // 3. maxPrice -> nese maxPrice ka vlere: mbaj vetem p.price <= Number(maxPrice)
+    // 4. sort === 'asc'  -> rendit sipas cmimit nga i uleti (a.price - b.price)
+    //    sort === 'desc' -> rendit sipas cmimit nga i larti (b.price - a.price)
+    // Tani po kthen te gjitha pa filtruar/rendine -> ndryshoje.
     return list
   }, [products, search, category, maxPrice, sort])
 
@@ -30,6 +30,8 @@ export default function Home() {
         <h1>Gjej motorrin tënd të radhës</h1>
         <p>Përzgjedhje motorrash të reja dhe të përdorura, gati për rrugë.</p>
       </section>
+
+      <p className="empty">Filtrat dhe renditja jane per t'u perfunduar nga nxenesi (funksioni filtered ne Home.jsx).</p>
 
       <div className="filters">
         <input
